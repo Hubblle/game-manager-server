@@ -55,7 +55,7 @@ def user():
 @app.route("/login", methods=["GET", "POST"])
 def route_login():
     if request.method == "GET":
-        return login.is_logged_in()
+        return str(login.is_logged_in())
     
    
     elif request.method == "POST":
