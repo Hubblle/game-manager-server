@@ -125,4 +125,4 @@ def join_game(game_id:str):
     
     session["game_id"] = game_id
     game.opponent = username
-    game.full == True
+    game.full = True
