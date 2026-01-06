@@ -35,11 +35,15 @@ def create_game():
     """Cette fonction est utilisée pour créer une partie
     """
     #Verifier que l'utilisateur n'a pas déjà une partie en cours, si oui, on ferme la partie si elle n'est pas pleine
+    idx = ""
     for id, game in games.items():
         if game.creator == session.get("username", None):
             if game.full:
                 raise GameAlreadyExist
-            games.pop(id)
+            idx = id     
+    
+    if idx:
+       games.pop(idx)
                 
     
     
