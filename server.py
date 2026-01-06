@@ -2,6 +2,7 @@ from flask import Flask, request, session
 import register
 import logging
 import login
+import game
 import dotenv
 import os
 
@@ -22,6 +23,9 @@ app.secret_key = key
 file_logger = logging.FileHandler("./server.log")
 ## L'ajouter au logger du serveur par défaut
 app.logger.addHandler(file_logger)
+
+###### partie gestion utilisateur
+
 
 @app.route('/users', methods=['POST','GET'])
 def user():
@@ -71,6 +75,23 @@ def route_login():
         except login.WrongPassword:
             app.logger.warning(f"[{request.headers.get_all("X-Real-IP")[0]}]: Used wrong login credentials !")
             return "Wrong login credentials !"
+
+
+###### partie jeu
+@app.route("/games", methods=["GET"])
+def games():
+    if request.method == "GET":
+        return game.list_games()
+    
+    if request.method == "POST":
+        #Essayer de créer une partie
+        #Regarder si il y a une connexion valide
+        if not login.is_logged_in():
+            return "You are not connected !"
+        
+        return game.create_game().uuid
+
+
 
 
 if __name__ == '__main__':
