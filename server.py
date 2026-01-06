@@ -95,12 +95,12 @@ def games():
             return "A game is already running with your account !"
         return uuid
     
-@app.route("/game/<str:game_id>")
+@app.route("/game/<string:game_id>")
 def game_endpoint(game_id:str):
     #Retourne le status général de la partie
     return game.get_status(game_id)
 
-@app.route("/join/<str:game_id>")
+@app.route("/join/<string:game_id>")
 def join_endpoint(game_id:str):
     if not login.is_logged_in():
         return "You are not connected !"
