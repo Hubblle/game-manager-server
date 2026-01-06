@@ -70,7 +70,6 @@ def login(username:str, password:str):
         
         session["is_active"] = True
         
-        
 
 def is_logged_in() -> bool:
     """Fonction qui verifie si l'utilisateur est authentifié à partir du cookie de session
@@ -83,7 +82,7 @@ def is_logged_in() -> bool:
     ip = session.get("ip", None)
     
     #seulement si l'ip existe
-    if not (not ip):
+    if ip != None:
         if ip != request.headers.get_all("X-Real-IP")[0].split(":")[0]:
             session["is_active"] = False
             return False
