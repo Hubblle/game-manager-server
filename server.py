@@ -89,7 +89,11 @@ def games():
         if not login.is_logged_in():
             return "You are not connected !"
         
-        return game.create_game().uuid
+        try:
+            uuid = game.create_game().uuid
+        except game.GameAlreadyExist:
+            return "A game is already running with your account !"
+        return uuid
 
 
 
