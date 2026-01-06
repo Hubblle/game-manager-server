@@ -78,7 +78,7 @@ def route_login():
 
 
 ###### partie jeu
-@app.route("/games", methods=["GET"])
+@app.route("/games", methods=["GET","POST"])
 def games():
     if request.method == "GET":
         return game.list_games()
