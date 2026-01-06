@@ -52,14 +52,14 @@ def user():
         
         
         
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST", "DELETE"])
 def route_login():
     if request.method == "GET":
         return str(login.is_logged_in())
     
    
     elif request.method == "POST":
-        # Essaye d'enregistrer l'utilisateur 
+        # Essaye d'authentifier l'utilisateur 
         username = request.form.get("username", "")
         password = request.form.get("password", "")
         try:
@@ -71,6 +71,13 @@ def route_login():
         except login.WrongPassword:
             app.logger.warning(f"[{request.headers.get_all("X-Real-IP")[0]}]: Used wrong login credentials !")
             return "Wrong login credentials !"
+        
+    elif request.method == "DELETE":
+        #Dé-authentifie l'utilisateur (marche aussi pour vider les cookies)
+        
+        for key in session.keys:
+            del session[key]
+            return "Successfully unlogged"
 
 
 if __name__ == '__main__':
