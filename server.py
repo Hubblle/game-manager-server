@@ -77,7 +77,7 @@ def route_login():
         
         for key in session.keys():
             del session[key]
-            return "Successfully unlogged"
+        return "Successfully unlogged"
 
 
 if __name__ == '__main__':
