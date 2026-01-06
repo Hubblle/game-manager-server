@@ -76,7 +76,7 @@ def route_login():
         #Dé-authentifie l'utilisateur (marche aussi pour vider les cookies)
         
         for key in session.keys():
-            del session[key]
+            session[key] == ""
         return "Successfully unlogged"
 
 
