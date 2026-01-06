@@ -10,7 +10,14 @@ from uuid import uuid4
 class GameAlreadyExist(Exception):
     def __init__(self, *args):
         super().__init__(*args)
+        
+class GameDontExist(Exception):
+    def __init__(self, *args):
+        super().__init__(*args)
 
+class GameFull(Exception):
+    def __init__(self, *args):
+        super().__init__(*args)
 
 
 #### Game class
@@ -20,6 +27,7 @@ class Game():
         self.creator = creator
         self.uuid = uuid
         self.full = False
+        self.opponent = ""
 
 
 
@@ -77,3 +85,44 @@ def list_games()->dict:
     
     return retrn
     
+    
+def get_status(game_id:str):
+    """Cette fonction renvoie le status générale d'une partie
+    """
+    
+    #Regardez si la partie existe
+    game = games.get(game_id, None)
+    
+    if game == None:
+        return {}
+    
+    game_status={
+        "full":game.full,
+        "creator":game.creator,
+        "opponent":game.opponent
+    }
+    
+    return game_status
+    
+
+def join_game(game_id:str):
+    """Fonction qui permet à un utilisateur de rejoindre une partie
+    """
+    
+    username = session.get("username", None)
+    
+    if username == None:
+        return
+    
+    #regarder si la partie existe
+    game = games.get(game_id, None)
+    
+    if game == None:
+        raise GameDontExist
+    
+    if game.full == True:
+        raise GameFull
+    
+    session["game_id"] = game_id
+    game.opponent = username
+    game.full == True

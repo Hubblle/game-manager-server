@@ -94,8 +94,25 @@ def games():
         except game.GameAlreadyExist:
             return "A game is already running with your account !"
         return uuid
+    
+@app.route("/game/<str:game_id>")
+def game_endpoint(game_id:str):
+    #Retourne le status général de la partie
+    return game.get_status(game_id)
 
-
+@app.route("/join/<str:game_id>")
+def join_endpoint(game_id:str):
+    if not login.is_logged_in():
+        return "You are not connected !"
+    
+    try:
+        game.join_game(game_id)
+    except game.GameDontExist:
+        return "This game do not exist"
+    except game.GameFull:
+        return "This game is full"
+    
+    return "Successfully joined the game !"
 
 
 if __name__ == '__main__':
