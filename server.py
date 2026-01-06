@@ -71,12 +71,6 @@ def route_login():
         except login.WrongPassword:
             app.logger.warning(f"[{request.headers.get_all("X-Real-IP")[0]}]: Used wrong login credentials !")
             return "Wrong login credentials !"
-        
-    elif request.method == "DELETE":
-        #Dé-authentifie l'utilisateur (marche aussi pour vider les cookies)
-        
-        session.clear()
-        return "Successfully unlogged"
 
 
 if __name__ == '__main__':
