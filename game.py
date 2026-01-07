@@ -194,7 +194,7 @@ def get_status(game_id:str):
     return game_status
     
 
-def get_status(game_id:str):
+def get_infos(game_id:str):
     """Cette fonction renvoie les infos de jeu d'une partie
     """
     
