@@ -100,6 +100,30 @@ def game_endpoint(game_id:str):
     #Retourne le status général de la partie
     return game.get_status(game_id)
 
+@app.route("/play/<string:game_id>", methods=["POST"])
+def play(game_id:str):
+    if not login.is_logged_in():
+        return "You are not connected !"
+    
+    #Récupérer la partie
+    gm : game.Game = game.games.get(game_id, False)
+    
+    if not gm:
+        return "This game do not exist"
+    
+    return gm.play(request.form, gm.is_creator())
+
+
+
+@app.route("/infos/<string:game_id>")
+def infos_endpoint(game_id:str):
+    if not login.is_logged_in():
+        return "You are not connected !"
+    
+
+    return game.get_infos(game_id)
+
+
 @app.route("/join/<string:game_id>")
 def join_endpoint(game_id:str):
     if not login.is_logged_in():
