@@ -100,7 +100,7 @@ class Game():
             shot[0] = False
             user["hit"].append(shot)
             self.turn += 1
-            self.next_turn = opponent
+            self.next_turn = opponent["name"]
             return "miss"
         
             
