@@ -111,7 +111,7 @@ def play(game_id:str):
     if not gm:
         return "This game do not exist"
     
-    return gm.play(request.form, gm.is_creator())
+    return gm.play(request.get_json(), gm.is_creator())
 
 
 
