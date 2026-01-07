@@ -209,7 +209,8 @@ def get_infos(game_id:str):
         game.creator["name"]: game.creator,
         game.opponent["name"]: game.opponent,
         "next_turn": game.next_turn,
-        "turn":game.turn
+        "turn":game.turn,
+        "win":game.win
     }
     
     return game_infos
