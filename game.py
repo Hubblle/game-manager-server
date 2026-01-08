@@ -49,6 +49,18 @@ class Game():
                 "score" : 0
                     }
         
+    def get_safe_opponent(self)->list:
+        """Fonction qui retourne le dictionaire d'un utilisateur de manière safe (sans ses bateaux)
+        """
+        temp_creator = self.creator.copy()
+        temp_creator["ship"] = [] if len(self.creator["ship"]) == 0 else ["obfuscated"]
+        
+        
+        
+        temp_opponent = self.creator.copy()
+        temp_opponent["ship"] = [] if len(self.opponent["ship"]) == 0 else ["obfuscated"]
+        
+        return [temp_creator, temp_opponent]
         
     def play(self, infos:dict, creator=False)->str:
         """Fonction qui permet de jouer un tour d'une partie, elle va calculer ce qu'il faut et retourner les informations à transmettre au clients
@@ -204,10 +216,11 @@ def get_infos(game_id:str):
     if game == None:
         return {}
 
+    temp = game.get_safe_opponent()
 
     game_infos = {
-        game.creator["name"]: game.creator,
-        game.opponent["name"]: game.opponent,
+        game.creator["name"]: temp[0],
+        game.opponent["name"]: temp[1],
         "next_turn": game.next_turn,
         "turn":game.turn,
         "win":game.win
