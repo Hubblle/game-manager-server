@@ -31,6 +31,7 @@ class Game():
         self.turn = 0 #Variable utilisée pour compter le nombres de tours d'une partie
         self.next_turn = creator #Variable qui contiendra le prochain joueur
         self.win = [False]
+        self.deletable = False #Variable qui indique au GC que la partie ne doit plus être maintenue
         
         self.creator = {
                 "name":creator,
@@ -99,6 +100,7 @@ class Game():
             
             if original_game.has_win(opponent["ship"],user["hit"]):
                 self.win = [True, user]
+                self.deletable = True #Pour se faire suppr par le GC
                 return "win"
             
             elif original_game.eval_sank_ships(opponent["ship"], user):

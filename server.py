@@ -1,3 +1,4 @@
+from time import sleep
 from flask import Flask, request, session
 import register
 import logging
@@ -5,7 +6,7 @@ import login
 import game
 import dotenv
 import os
-
+import threading
 
 #Charge le contenu de ./.env dans les variables d’environnement
 dotenv.load_dotenv()
@@ -23,6 +24,24 @@ app.secret_key = key
 file_logger = logging.FileHandler("./server.log")
 ## L'ajouter au logger du serveur par défaut
 app.logger.addHandler(file_logger)
+
+###### partie GC 
+
+def cleanup_games():
+    #Vider les parties inutilisées:
+    expired_games = [
+        game_id for game_id, gm in game.games.items()
+        if gm.deletable == True
+    ]
+    for game_id in expired_games:
+        del game.games[game_id]
+
+def GC():
+    while True:
+        sleep(120)
+        cleanup_games()
+
+gc_thread = threading.Thread(target=GC(), daemon=True) # daemon = True >> Empêche le thread de prévenir la fermeture du programme
 
 ###### partie gestion utilisateur
 
