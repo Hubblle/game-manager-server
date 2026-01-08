@@ -35,6 +35,10 @@ def cleanup_games():
     ]
     for game_id in expired_games:
         del game.games[game_id]
+        try:
+            game.games.pop(game_id)
+        except Exception:
+            pass
 
 def GC():
     while True:
