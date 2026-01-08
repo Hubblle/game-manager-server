@@ -79,7 +79,7 @@ def user():
         
         
         
-@app.route("/login", methods=["GET", "POST", "DELETE"])
+@app.route("/login", methods=["GET", "POST"])
 def route_login():
     if request.method == "GET":
         return str(login.is_logged_in())
