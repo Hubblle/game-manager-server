@@ -45,7 +45,8 @@ def GC():
         sleep(120)
         cleanup_games()
 
-gc_thread = threading.Thread(target=GC(), daemon=True) # daemon = True >> Empêche le thread de prévenir la fermeture du programme
+gc_thread = threading.Thread(target=GC, daemon=True) # daemon = True >> Empêche le thread de prévenir la fermeture du programme
+gc_thread.start()
 
 ###### partie gestion utilisateur
 
